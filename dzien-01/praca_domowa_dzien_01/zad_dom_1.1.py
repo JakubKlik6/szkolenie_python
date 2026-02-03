@@ -18,7 +18,9 @@ def wyszukaj_polisy_zaawansowane(
         data_do = None,
         klient_nazwisko = None
 ):
-
+    '''
+    Wyszukuje polisy według dynamicznych kryterów. Bezpiecznie zbudowane zapytania z parametryzacją.
+    '''
     with sqlite3.connect(baza_danych) as conn:
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
@@ -58,6 +60,9 @@ def raport_miesieczny(
         baza_danych,
         rok = None
 ):
+    '''
+    Zwraca pogrupowany raport liczy i wartosci polis według miesięcy. 
+    '''
     if rok is None:
         rok = datetime.now().strftime("%Y")
 
@@ -92,6 +97,9 @@ def raport_miesieczny(
         return [dict(row) for row in cur.fetchall()]
 
 def eksportuj_do_csv(dane, sciezka, kolumny=None):
+    '''
+    zapisuje przekazany raport do pliku csv na podaną sciezke.
+    '''
     df = pd.DataFrame(dane)
     if kolumny:
         df = df[kolumny]
